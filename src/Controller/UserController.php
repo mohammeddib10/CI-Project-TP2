@@ -27,7 +27,7 @@ class UserController extends AbstractController
     public function index(): Response
     {
 
-        $response;
+        $response = null;
         $userap = array();
 
         $curl_handle=curl_init();
