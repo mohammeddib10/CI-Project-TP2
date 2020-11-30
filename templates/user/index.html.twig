@@ -35,6 +35,37 @@
             </div>
             <!-- Heading -->
 
+            <div class="col-lg-3 col-md-3">
+            <!-- Card -->
+            <div class="card">
+
+                <!-- Card image -->
+                <h2>&nbsp;&nbsp;Active users </h2>
+            
+                <!-- Card content -->
+                <div class="card-body">
+            
+                <!-- Title -->
+                <h4 class="card-title">
+                    {% set usersactive = 0 %}
+                    {% if ((userap|length > 0) and userap is defined ) %}
+                    {% for user in userap %}
+                        {% if user.currentStatus == 'ACTIVE' %}
+                            {% set usersactive = usersactive + 1 %}
+                        {% endif %}
+                    {% endfor %}
+                    {{ usersactive }} on servers : <br>
+                    {{ userap[0].Server }}
+                    {% else %}
+                     0 on servers : 
+                    {% endif %}
+                </h4>
+                </div>
+            
+            </div>
+            <!-- Card -->
+            </div>
+            <br>
 
 
             <!--Grid row-->

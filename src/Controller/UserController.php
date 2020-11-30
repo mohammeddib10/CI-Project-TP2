@@ -28,15 +28,35 @@ class UserController extends AbstractController
      */
     public function index(): Response
     {
-        // you can add request options (or override global ones) using the 3rd argument
-        $response = $this->client->request('GET', 'http://127.0.0.1:2345/users');
 
-        $content = $response->toArray();
+        $response;
         $userap = array();
-        foreach ($content as $res){
-            $res["Server"] = "http://127.0.0.1:2345";
-            array_push($userap,$res);
+
+        $curl_handle=curl_init();
+        curl_setopt($curl_handle, CURLOPT_URL,'http://127.0.0.1:2345/users');
+        curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Your application name');
+        $query = curl_exec($curl_handle);
+        curl_close($curl_handle);
+
+        
+
+        if($query != false){
+
+            $response = $this->client->request('GET', 'http://127.0.0.1:2345/users');
+            $statusCode = $response->getStatusCode();
+    
+            if($statusCode == '200'){
+                $content = $response->toArray();
+                $userap = array();
+                foreach ($content as $res){
+                    $res["Server"] = "http://127.0.0.1:2345";
+                    array_push($userap,$res);
+                }
+            }
         }
+        
 
         return $this->render('user/index.html.twig', [
             'userap' => $userap,

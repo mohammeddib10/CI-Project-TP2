@@ -29,17 +29,26 @@ class ChatroomController extends AbstractController
      */
     public function index(): Response
     {
-        // you can add request options (or override global ones) using the 3rd argument
-        $response = $this->client->request('GET', 'http://127.0.0.1:2345/chatrooms');
-
-        $content = $response->toArray();
+        
         $chatroomsap = array();
-        foreach ($content as $key => $value){
-            array_push($chatroomsap,['Server' => "http://127.0.0.1:2345", "Chatroom" => $value]);
+
+        $curl_handle=curl_init();
+        curl_setopt($curl_handle, CURLOPT_URL,'http://127.0.0.1:2345/chatrooms');
+        curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+        curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Your application name');
+        $query = curl_exec($curl_handle);
+        curl_close($curl_handle);
+
+        if($query != false){
+            $response = $this->client->request('GET', 'http://127.0.0.1:2345/chatrooms');
+
+            $content = $response->toArray();
+            $chatroomsap = array();
+            foreach ($content as $key => $value){
+                array_push($chatroomsap,['Server' => "http://127.0.0.1:2345", "Chatroom" => $value]);
+            }
         }
-
-        dump($chatroomsap);
-
 
         return $this->render('chatroom/index.html.twig', [
             'chatrooms' => $chatroomsap,
