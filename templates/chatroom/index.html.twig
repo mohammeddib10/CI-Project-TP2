@@ -1,35 +1,99 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Chatroom index{% endblock %}
+{% block title %}Users index{% endblock %}
+
 
 {% block body %}
-    <h1>Chatroom index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Server</th>
-                <th>Chatroom</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for chatroom in chatrooms %}
-            <tr>
-                <td>{{ chatroom.server }}</td>
-                <td>{{ chatroom.chatroom }}</td>
-                <td>
-                    <a href="{{ path('chatroom_show', {'chatroom': chatroom.chatroom}) }}">show</a>
-                    <a href="{{ path('chatroom_edit', {'chatroom': chatroom.chatroom}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <!--Main layout-->
+    <main class="pt-5 mx-lg-5">
+        <div class="container-fluid mt-5">
 
-    <a href="{{ path('chatroom_new') }}">Create new</a>
+            <!-- Heading -->
+            <div class="card mb-4 wow fadeIn">
+
+                <!--Card content-->
+                <div class="card-body d-sm-flex justify-content-between">
+
+                    <h4 class="mb-2 mb-sm-0 pt-1">
+                        <a href="https://mdbootstrap.com/docs/jquery/" target="_blank">Home Page</a>
+                        <span>/</span>
+                        <span>Chatrooms</span>
+                    </h4>
+
+                    <form class="d-flex justify-content-center">
+                        <!-- Default input -->
+                        <input type="search" placeholder="Type your query" aria-label="Search" class="form-control">
+                        <button class="btn btn-primary btn-sm my-0 p" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+            <!-- Heading -->
+
+
+
+            <!--Grid row-->
+            <div class="row wow fadeIn">
+
+                <!--Grid column-->
+                <div class="col-lg-12 col-md-12 mb-4">
+
+                    <!--Card-->
+                    <div class="card">
+
+                        <!-- Card header -->
+                        <div class="card-header">Chatrooms </div>
+
+                        <!--Card content-->
+                        <div class="card-body">
+
+
+                            <h1>Chatrooms</h1>
+
+                            <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Server</th>
+                                            <th>Chatroom</th>            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for chatroom in chatrooms %}
+                                        <tr>
+                                            <td>{{ chatroom.Server }}</td>
+                                            <td>{{ chatroom.Chatroom }}</td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="3">no records found</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                    <!--/.Card-->
+
+                </div>
+                <!--Grid column-->
+
+
+            </div>
+            <!--Grid row-->
+
+
+        </div>
+    </main>
+    <!--Main layout-->
+
+
 {% endblock %}
+
+
